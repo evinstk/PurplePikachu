@@ -6,6 +6,8 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src)
 set(SRC
     ${INCROOT}/Application.hpp
     ${SRCROOT}/Application.cpp
+    ${INCROOT}/GameState.hpp
+    ${SRCROOT}/GameState.cpp
     ${INCROOT}/State.hpp
     ${SRCROOT}/State.cpp
     ${INCROOT}/StateStack.hpp
