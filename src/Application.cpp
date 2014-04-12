@@ -1,5 +1,6 @@
 #include <TEMM/Application.hpp>
 #include <TEMM/TitleState.hpp>
+#include <TEMM/GameState.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace temm
@@ -40,6 +41,7 @@ namespace temm
 	void Application::registerStates()
 	{
 		mStateStack.registerState<TitleState>(States::Title);
+		mStateStack.registerState<GameState>(States::Game);
 	}
 
 	void Application::processInput()

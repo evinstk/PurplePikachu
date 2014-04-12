@@ -14,7 +14,6 @@ namespace temm
 		virtual bool update(sf::Time dt);
 		virtual bool handleEvent(const sf::Event& event);
 	private:
-		// Title stuff
 	};
 }
 

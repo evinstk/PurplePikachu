@@ -13,6 +13,7 @@ namespace temm
 		enum ID
 		{
 			Title,
+			Game,
 			None,
 		};
 	}

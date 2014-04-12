@@ -1,4 +1,5 @@
 #include <TEMM/TitleState.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace temm
 {
@@ -15,13 +16,16 @@ namespace temm
 
 	bool TitleState::update(sf::Time dt)
 	{
-		// Update TitleState stuff
 		return true;
 	}
-
+	
 	bool TitleState::handleEvent(const sf::Event& event)
 	{
-		// Handle events for TitleState
+		if (event.type == sf::Event::KeyPressed)
+		{
+			requestStackClear();
+			requestStackPush(States::ID::Game);
+		}
 		return true;
 	}
 }
