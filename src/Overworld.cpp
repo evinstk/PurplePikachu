@@ -23,7 +23,7 @@ namespace temm
 
 	Overworld::Tile Overworld::getTile(int x, int y) const
 	{
-		assert(x < mWidth && y < mHeight);
+		assert((x < mWidth) && (y < mHeight));
 		long index = x + (y * mWidth);
 		return mTiles[index];
 	}
