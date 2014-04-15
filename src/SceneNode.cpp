@@ -1,4 +1,5 @@
 #include <TEMM/SceneNode.hpp>
+#include <TEMM/Utility.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 
@@ -91,6 +92,16 @@ namespace temm
 	{
 		for (auto& child : mChildren)
 			child->draw(target, states, renderLists);
+	}
+
+	bool collision(const SceneNode& lhs, const SceneNode& rhs)
+	{
+		return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+	}
+
+	float distance(const SceneNode& lhs, const SceneNode& rhs)
+	{
+		return length(lhs.getWorldPosition() - rhs.getWorldPosition());
 	}
 
 }

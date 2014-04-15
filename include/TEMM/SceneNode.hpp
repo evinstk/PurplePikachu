@@ -45,6 +45,8 @@ namespace temm
 		std::vector<Ptr> mChildren;
 	};
 
+	bool collision(const SceneNode& lhs, const SceneNode& rhs);
+	float distance(const SceneNode& lhs, const SceneNode& rhs);
 }
 
 #endif
