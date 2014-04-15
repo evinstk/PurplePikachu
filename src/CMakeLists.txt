@@ -29,6 +29,8 @@ set(SRC
     ${SRCROOT}/StateStack.cpp
     ${INCROOT}/TitleState.hpp
     ${SRCROOT}/TitleState.cpp
+	${INCROOT}/Utility.hpp
+	${SRCROOT}/Utility.cpp
     ${SRCROOT}/Main.cpp
 )
 
