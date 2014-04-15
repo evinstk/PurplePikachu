@@ -7,8 +7,17 @@ set(SRC
     ${INCROOT}/Application.hpp
     ${SRCROOT}/Application.cpp
     ${INCROOT}/Category.hpp
+	${INCROOT}/DataTables.hpp
+	${SRCROOT}/DataTables.cpp
     ${INCROOT}/GameState.hpp
     ${SRCROOT}/GameState.cpp
+	${INCROOT}/Mob.hpp
+	${SRCROOT}/Mob.cpp
+	${INCROOT}/Overworld.hpp
+	${SRCROOT}/Overworld.cpp
+	${INCROOT}/ResourceHolder.hpp
+	${INCROOT}/ResourceHolder.inl
+	${INCROOT}/ResourceIdentifiers.hpp
 	${INCROOT}/SceneNode.hpp
 	${SRCROOT}/SceneNode.cpp
 	${INCROOT}/SpriteNode.hpp
