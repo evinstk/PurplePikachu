@@ -19,7 +19,7 @@ namespace temm
 
 		typedef std::unique_ptr<SceneNode> Ptr;
 
-		explicit SceneNode(Category::Type category = Category::None);
+		explicit SceneNode(unsigned z, Category::Type category = Category::None);
 
 		void attachChild(Ptr child);
 		Ptr detachChild(const SceneNode& node);

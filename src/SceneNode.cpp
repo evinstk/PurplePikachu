@@ -5,8 +5,9 @@
 namespace temm
 {
 
-	SceneNode::SceneNode(Category::Type category)
-		: mDefaultCategory(category)
+	SceneNode::SceneNode(unsigned z, Category::Type category)
+		: z(z)
+		, mDefaultCategory(category)
 		, mChildren()
 		, mParent(nullptr)
 	{
