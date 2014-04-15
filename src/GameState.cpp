@@ -5,13 +5,13 @@ namespace temm
 
 	GameState::GameState(StateStack& stack, Context context)
 		: State(stack, context)
+		, mOverworld(*context.window, Overworld::Tile::Grass, 64, 64)
 	{
 	}
 
     void GameState::draw()
     {
-		Context context = getContext();
-		context.window->clear(sf::Color(255, 0, 0, 255));
+		mOverworld.draw();
     }
 
     bool GameState::update(sf::Time dt)
