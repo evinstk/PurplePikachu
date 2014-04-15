@@ -25,7 +25,7 @@ namespace temm
 
 		sf::IntRect headRect = Table[type].textureRect;
 		headRect.height = HeadHeight;
-		std::unique_ptr<SpriteNode> head(new SpriteNode(z, *mCollisionSprite.getTexture(), headRect));
+		std::unique_ptr<SpriteNode> head(new SpriteNode(z + 1, *mCollisionSprite.getTexture(), headRect));
 		mHead = head.get();
 		attachChild(std::move(head));
 	}
