@@ -11,6 +11,8 @@ set(SRC
     ${SRCROOT}/GameState.cpp
 	${INCROOT}/SceneNode.hpp
 	${SRCROOT}/SceneNode.cpp
+	${INCROOT}/SpriteNode.hpp
+	${SRCROOT}/SpriteNode.cpp
     ${INCROOT}/State.hpp
     ${SRCROOT}/State.cpp
     ${INCROOT}/StateStack.hpp
