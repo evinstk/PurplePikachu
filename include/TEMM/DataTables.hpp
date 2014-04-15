@@ -11,7 +11,8 @@ namespace temm
 	struct MobData
 	{
 		TextureID texture;
-		sf::IntRect textureRect;
+		sf::IntRect collisionRect;
+		sf::IntRect headRect;
 	};
 
 	std::vector<MobData> initializeMobData();

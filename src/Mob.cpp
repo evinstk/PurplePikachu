@@ -9,25 +9,17 @@ namespace temm
 	namespace
 	{
 		const std::vector<MobData> Table = initializeMobData();
-		const int HeadHeight = 3;
-		const int CollisionHeight = 16;
 	}
 
 	Mob::Mob(unsigned z, Type type, const TextureHolder& textures)
 		: SceneNode(z)
 		, mType(type)
-		, mCollisionSprite(textures.get(Table[type].texture))
+		, mCollisionSprite(textures.get(Table[type].texture), Table[type].collisionRect)
 		, mVelocity(0.f, 0.f)
 	{
-		sf::IntRect collisionRect = Table[type].textureRect;
-		collisionRect.top = collisionRect.top + HeadHeight;
-		collisionRect.height = CollisionHeight;
-		mCollisionSprite.setTextureRect(collisionRect);
-
-		sf::IntRect headRect = Table[type].textureRect;
-		headRect.height = HeadHeight;
-		std::unique_ptr<SpriteNode> head(new SpriteNode(z + 1, *mCollisionSprite.getTexture(), headRect));
-		head->setPosition(0.f, -(float)HeadHeight);
+		MobData data = Table[type];
+		std::unique_ptr<SpriteNode> head(new SpriteNode(z + 1, *mCollisionSprite.getTexture(), data.headRect));
+		head->setPosition(0.f, -(float)data.headRect.height);
 		mHead = head.get();
 		attachChild(std::move(head));
 	}
