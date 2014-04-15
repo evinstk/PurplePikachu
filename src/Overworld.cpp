@@ -1,12 +1,17 @@
 #include <TEMM/Overworld.hpp>
+#include <TEMM/Mob.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>
 #include <cassert>
 
 namespace temm
 {
 
-	Overworld::Overworld(Tile defaultTile, int height, int width)
-		: mTiles(height * width)
+	Overworld::Overworld(sf::RenderTarget& target, Tile defaultTile, int height, int width)
+		: mTarget(target)
+		, mSceneGraph(0)
+		, mTiles(height * width)
 		, mWidth(width)
 		, mHeight(height)
 	{
@@ -14,6 +19,23 @@ namespace temm
 		{
 			tile = defaultTile;
 		}
+
+		mSceneGraph.setScale(4.f, 4.f);
+
+		loadTextures();
+		std::unique_ptr<Mob> red(new Mob(0, Mob::Red, mTextures));
+		red->move(10.f, 10.f);
+		mSceneGraph.attachChild(std::move(red));
+	}
+
+	void Overworld::loadTextures()
+	{
+		mTextures.load(TextureID::Entities, "res/img/entities.png");
+	}
+
+	void Overworld::draw()
+	{
+		mTarget.draw(mSceneGraph);
 	}
 
 	bool Overworld::update(sf::Time dt)

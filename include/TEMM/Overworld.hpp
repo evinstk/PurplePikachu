@@ -1,6 +1,9 @@
 #ifndef OVERWORLD_HPP
 #define OVERWORLD_HPP
 
+#include <TEMM/SceneNode.hpp>
+#include <TEMM/ResourceHolder.hpp>
+#include <TEMM/ResourceIdentifiers.hpp>
 #include <vector>
 
 namespace sf
@@ -11,7 +14,7 @@ namespace sf
 namespace temm
 {
 
-	class Overworld
+	class Overworld : private sf::NonCopyable
 	{
 	public:
 
@@ -30,8 +33,9 @@ namespace temm
 			LayerCount,
 		};
 
-		Overworld(Tile defaultTile, int width, int height);
+		Overworld(sf::RenderTarget& target, Tile defaultTile, int width, int height);
 
+		void draw();
 		bool update(sf::Time dt);
 
 		Tile getTile(int x, int y) const;
@@ -39,7 +43,12 @@ namespace temm
 		int getHeight() const;
 
 	private:
+		void loadTextures();
 		void resolveCollisions();
+
+		sf::RenderTarget& mTarget;
+		TextureHolder mTextures;
+		SceneNode mSceneGraph;
 
 		std::vector<Tile> mTiles;
 		const int mWidth;
