@@ -7,6 +7,7 @@ set(SRC
     ${INCROOT}/Application.hpp
     ${SRCROOT}/Application.cpp
     ${INCROOT}/Category.hpp
+	${INCROOT}/Command.hpp
 	${INCROOT}/DataTables.hpp
 	${SRCROOT}/DataTables.cpp
     ${INCROOT}/GameState.hpp
