@@ -7,7 +7,6 @@
 #include <SFML/System/NonCopyable.hpp>
 #include <memory>
 #include <vector>
-#include <array>
 #include <list>
 #include <functional>
 
@@ -17,13 +16,6 @@ namespace temm
 	class SceneNode : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
 	public:
-		enum zIndex
-		{
-			Lower,
-			Middle,
-			Higher,
-			IndexCount,
-		};
 
 		typedef std::unique_ptr<SceneNode> Ptr;
 
@@ -32,11 +24,11 @@ namespace temm
 		void attachChild(Ptr child);
 		Ptr detachChild(const SceneNode& node);
 
-		zIndex z;
+		unsigned z;
 
 	private:
 		friend class SceneNode;
-		typedef std::array<std::list<std::function<void (void)>>, IndexCount> RenderLists;
+		typedef std::vector<std::list<std::function<void (void)>>> RenderLists;
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states, RenderLists& renderLists) const;

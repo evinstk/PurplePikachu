@@ -14,7 +14,7 @@ namespace temm
 		RenderLists renderLists;
 		draw(target, states, renderLists);
 
-		for (unsigned i = 0; i < IndexCount; ++i)
+		for (unsigned i = 0; i < renderLists.size(); ++i)
 		{
 			for (auto& fun : renderLists[i])
 			{
