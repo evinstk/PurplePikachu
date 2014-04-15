@@ -4,13 +4,15 @@
 namespace temm
 {
 
-	SpriteNode::SpriteNode(const sf::Texture& texture)
-		: mSprite(texture)
+	SpriteNode::SpriteNode(unsigned z, const sf::Texture& texture)
+		: SceneNode(z)
+		, mSprite(texture)
 	{
 	}
 
-	SpriteNode::SpriteNode(const sf::Texture& texture, const sf::IntRect& textureRect)
-		: mSprite(texture, textureRect)
+	SpriteNode::SpriteNode(unsigned z, const sf::Texture& texture, const sf::IntRect& textureRect)
+		: SceneNode(z)
+		, mSprite(texture, textureRect)
 	{
 	}
 
