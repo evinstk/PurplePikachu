@@ -2,6 +2,7 @@
 #define TEMM_APPLICATION_HPP
 
 #include <TEMM/StateStack.hpp>
+#include <TEMM/ResourceHolder.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
@@ -19,6 +20,7 @@ namespace temm
 		void render();
 
 		sf::RenderWindow mWindow;
+		TextureHolder mTextures;
 		StateStack mStateStack;
 		const sf::Time mTimePerFrame;
 	};

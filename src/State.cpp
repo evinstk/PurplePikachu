@@ -3,8 +3,9 @@
 
 namespace temm
 {
-	State::Context::Context(sf::RenderWindow& window)
+	State::Context::Context(sf::RenderWindow& window, TextureHolder& textures)
 		: window(&window)
+		, textures(&textures)
 	{
 	}
 

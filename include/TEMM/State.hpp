@@ -1,7 +1,9 @@
 #ifndef TEMM_STATE_HPP
 #define TEMM_STATE_HPP
 
+#include <TEMM/ResourceIdentifiers.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <memory>
 
 namespace temm
@@ -24,9 +26,10 @@ namespace temm
 		typedef std::unique_ptr<State> Ptr;
 		struct Context
 		{
-			Context(sf::RenderWindow& window);
+			Context(sf::RenderWindow& window, TextureHolder& textures);
 
 			sf::RenderWindow* window;
+			TextureHolder* textures;
 		};
 
 		State(StateStack& stack, Context context);
