@@ -57,7 +57,10 @@ namespace temm
 	}
 
 	void SceneNode::pushCurrent(sf::RenderTarget& target, sf::RenderStates states, RenderLists& renderLists) const
-	{	
+	{
+		if (renderLists.size() < z + 1)
+			renderLists.resize(z + 1);
+
 		renderLists[z].push_back([=, &target](void) {
 			drawCurrent(target, states);
 		});
