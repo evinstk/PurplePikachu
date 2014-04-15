@@ -8,7 +8,8 @@ namespace temm
 	{
 		std::vector<MobData> data(Mob::TypeCount);
 
-		// Populate data
+		data[Mob::Red].texture = TextureID::Entities;
+		data[Mob::Red].textureRect = sf::IntRect(0, 0, 16, 19);
 
 		return data;
 	}

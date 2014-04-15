@@ -1,6 +1,7 @@
 #include <TEMM/Mob.hpp>
 #include <TEMM/DataTables.hpp>
 #include <TEMM/ResourceHolder.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace temm
 {
@@ -26,8 +27,13 @@ namespace temm
 		sf::IntRect headRect = Table[type].textureRect;
 		headRect.height = HeadHeight;
 		std::unique_ptr<SpriteNode> head(new SpriteNode(z + 1, *mCollisionSprite.getTexture(), headRect));
+		head->setPosition(0.f, -(float)HeadHeight);
 		mHead = head.get();
 		attachChild(std::move(head));
 	}
 
+	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+	{
+		target.draw(mCollisionSprite, states);
+	}
 }
