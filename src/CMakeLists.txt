@@ -8,6 +8,8 @@ set(SRC
     ${SRCROOT}/Application.cpp
     ${INCROOT}/GameState.hpp
     ${SRCROOT}/GameState.cpp
+	${INCROOT}/SceneNode.hpp
+	${SRCROOT}/SceneNode.cpp
     ${INCROOT}/State.hpp
     ${SRCROOT}/State.cpp
     ${INCROOT}/StateStack.hpp
