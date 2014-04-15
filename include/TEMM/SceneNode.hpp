@@ -1,5 +1,5 @@
-#ifndef SCENE_NODE_HPP
-#define SCENE_NODE_HPP
+#ifndef TEMM_SCENE_NODE_HPP
+#define TEMM_SCENE_NODE_HPP
 
 #include <TEMM/Category.hpp>
 #include <SFML/Graphics/Drawable.hpp>

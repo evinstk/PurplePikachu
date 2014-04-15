@@ -1,5 +1,5 @@
-#ifndef CATEGORY_HPP
-#define CATEGORY_HPP
+#ifndef TEMM_CATEGORY_HPP
+#define TEMM_CATEGORY_HPP
 
 namespace temm
 {

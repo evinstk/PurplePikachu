@@ -1,5 +1,5 @@
-#ifndef SPRITE_NODE_HPP
-#define SPRITE_NODE_HPP
+#ifndef TEMM_SPRITE_NODE_HPP
+#define TEMM_SPRITE_NODE_HPP
 
 #include <TEMM/SceneNode.hpp>
 #include <SFML/Graphics/Sprite.hpp>
