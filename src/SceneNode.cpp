@@ -30,6 +30,26 @@ namespace temm
 		return result;
 	}
 
+	sf::Vector2f SceneNode::getWorldPosition() const
+	{
+		return getWorldTransform() * sf::Vector2f();
+	}
+
+	sf::Transform SceneNode::getWorldTransform() const
+	{
+		sf::Transform transform = sf::Transform::Identity;
+
+		for (const SceneNode* node = this; node != nullptr; node = node->mParent)
+			transform = node->getTransform() * transform;
+
+		return transform;
+	}
+
+	sf::FloatRect SceneNode::getBoundingRect() const
+	{
+		return sf::FloatRect();
+	}
+
 	void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		RenderLists renderLists;

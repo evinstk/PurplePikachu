@@ -20,6 +20,8 @@ namespace temm
 
 		Mob(unsigned z, Type type, const TextureHolder& textures);
 
+		sf::FloatRect getBoundingRect() const;
+
 		void setVelocity(sf::Vector2f velocity);
 		void setVelocity(float vx, float vy);
 

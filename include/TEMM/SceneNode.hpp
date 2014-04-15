@@ -24,6 +24,10 @@ namespace temm
 		void attachChild(Ptr child);
 		Ptr detachChild(const SceneNode& node);
 
+		sf::Vector2f getWorldPosition() const;
+		sf::Transform getWorldTransform() const;
+		virtual sf::FloatRect getBoundingRect() const;
+
 		unsigned z;
 
 	private:

@@ -24,6 +24,11 @@ namespace temm
 		attachChild(std::move(head));
 	}
 
+	sf::FloatRect Mob::getBoundingRect() const
+	{
+		return getWorldTransform().transformRect(mCollisionSprite.getGlobalBounds());
+	}
+
 	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(mCollisionSprite, states);
