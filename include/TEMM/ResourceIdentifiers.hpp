@@ -12,6 +12,7 @@ namespace temm
 	enum class TextureID
 	{
 		Entities,
+		Tiles,
 	};
 
 	template <typename Resource, typename Identifier>

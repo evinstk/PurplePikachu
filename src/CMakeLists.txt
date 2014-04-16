@@ -28,6 +28,7 @@ set(SRC
     ${INCROOT}/StateStack.hpp
     ${INCROOT}/StateStack.inl
     ${SRCROOT}/StateStack.cpp
+	${INCROOT}/TileMap.hpp
     ${INCROOT}/TitleState.hpp
     ${SRCROOT}/TitleState.cpp
 	${INCROOT}/Utility.hpp

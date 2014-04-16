@@ -31,6 +31,7 @@ namespace temm
 	void Overworld::loadTextures()
 	{
 		mTextures.load(TextureID::Entities, "res/img/entities.png");
+		mTextures.load(TextureID::Tiles, "res/img/tiles.png");
 	}
 
 	void Overworld::draw()
