@@ -1,7 +1,7 @@
 #ifndef TEMM_TILEMAP_HPP
 #define TEMM_TILEMAP_HPP
 
-namespace
+namespace temm
 {
 
 	class TileMap
