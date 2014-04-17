@@ -36,7 +36,6 @@ namespace temm
 
 		rapidxml::xml_node<>* mapNode = mapTMX.first_node();
 
-		rapidxml::xml_node<>* tileNode = mapNode->first_node("tileset");
 		mWidth = std::atoi(mapNode->first_attribute("width")->value());
 		mHeight = std::atoi(mapNode->first_attribute("height")->value());
 
