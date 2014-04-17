@@ -40,19 +40,22 @@ namespace temm
 		mWidth = std::atoi(mapNode->first_attribute("width")->value());
 		mHeight = std::atoi(mapNode->first_attribute("height")->value());
 
-		mVertices.setPrimitiveType(sf::Quads);
-		mVertices.resize(mWidth * mHeight * 4);
+		mVertices.clear();
 
-		//rapidxml::xml_node<>* layer = mapNode->first_node("layer");
+		int layerIndex = 0;
 		for (rapidxml::xml_node<>* layer = mapNode->first_node("layer"); layer; layer = layer->next_sibling("layer"))
 		{
+			mVertices.push_back(sf::VertexArray());
+			mVertices[layerIndex].setPrimitiveType(sf::Quads);
+			mVertices[layerIndex].resize(mWidth * mHeight * 4);
+
 			int i = 0;
 			for (rapidxml::xml_node<>* tile = layer->first_node("data")->first_node("tile"); tile; tile = tile->next_sibling("tile"))
 			{
 				int tileID = std::atoi(tile->first_attribute("gid")->value());
 				sf::IntRect textureRect = Table.at(tileID).textureRect;
 
-				sf::Vertex* quad = &mVertices[i * 4];
+				sf::Vertex* quad = &mVertices[layerIndex][i * 4];
 
 				sf::Vector2f topLeft(float(i % mWidth) * TileSize, (float)(i / mWidth) * TileSize);
 				quad[0].position = topLeft;
@@ -68,6 +71,7 @@ namespace temm
 
 				++i;
 			}
+			++layerIndex;
 		}
 	}
 
@@ -75,7 +79,8 @@ namespace temm
 	{
 		states.transform *= getTransform();
 		states.texture = &mTexture;
-		target.draw(mVertices, states);
+		for (auto& vArray : mVertices)
+			target.draw(vArray, states);
 	}
 
 }

@@ -51,7 +51,7 @@ namespace temm
 
 		int mWidth;
 		int mHeight;
-		sf::VertexArray mVertices;
+		std::vector<sf::VertexArray> mVertices;
 		sf::Texture mTexture;
 	};
 
