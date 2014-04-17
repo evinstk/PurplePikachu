@@ -16,11 +16,11 @@ namespace temm
 		return data;
 	}
 
-	std::vector<TileData> initializeTileData()
+	std::map<int, TileData> initializeTileData()
 	{
-		std::vector<TileData> data(TileMap::TypeCount);
+		std::map<int, TileData> data;
 
-		int s = 16;
+		int s = TileMap::TileSize;
 
 		data[TileMap::Grass].texture = TextureID::Tiles;
 		data[TileMap::Grass].textureRect = sf::IntRect(s * 1, s * 3, s, s);
@@ -57,6 +57,12 @@ namespace temm
 
 		data[TileMap::GrassCornerBottomRight].texture = TextureID::Tiles;
 		data[TileMap::GrassCornerBottomRight].textureRect = sf::IntRect(s * 4, s * 4, s, s);
+
+		data[TileMap::GrassCornerTopLeft].texture = TextureID::Tiles;
+		data[TileMap::GrassCornerTopLeft].textureRect = sf::IntRect(0, 0, s, s);
+
+		data[TileMap::GrassCornerTopRight].texture = TextureID::Tiles;
+		data[TileMap::GrassCornerTopRight].textureRect = sf::IntRect(s * 4, 0, s, s);
 
 		return data;
 	}

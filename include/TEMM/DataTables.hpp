@@ -4,6 +4,7 @@
 #include <TEMM/ResourceIdentifiers.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
+#include <map>
 
 namespace temm
 {
@@ -22,7 +23,7 @@ namespace temm
 	};
 
 	std::vector<MobData> initializeMobData();
-	std::vector<TileData> initializeTileData();
+	std::map<int, TileData> initializeTileData();
 
 }
 

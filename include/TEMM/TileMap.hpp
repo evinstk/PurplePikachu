@@ -7,26 +7,29 @@ namespace temm
 	class TileMap
 	{
 	public:
-		enum Type
+		enum Tile
 		{
-			Grass,
+			Grass = 17,
 
-			GrassRidgeLeftTop,
-			GrassRidgeLeft,
-			GrassRidgeLeftBottom,
+			GrassRidgeLeftTop = 6,
+			GrassRidgeLeft = 11,
+			GrassRidgeLeftBottom = 16,
 
-			GrassRidgeRightTop,
-			GrassRidgeRight,
-			GrassRidgeRightBottom,
+			GrassRidgeRightTop = 10,
+			GrassRidgeRight = 15,
+			GrassRidgeRightBottom = 20,
 
-			GrassRidgeBottomLeft,
-			GrassRidgeBottom,
-			GrassRidgeBottomRight,
+			GrassRidgeBottomLeft = 22,
+			GrassRidgeBottom = 23,
+			GrassRidgeBottomRight = 24,
 
-			GrassCornerBottomLeft,
-			GrassCornerBottomRight,
+			GrassCornerBottomLeft = 21,
+			GrassCornerBottomRight = 25,
 
-			TypeCount,
+			GrassCornerTopLeft = 1,
+			GrassCornerTopRight = 5,
+
+			TypeCount = 14,
 		};
 	};
 
