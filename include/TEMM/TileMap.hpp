@@ -14,33 +14,6 @@ namespace temm
 	class TileMap : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
 	public:
-		enum Tile
-		{
-			Grass = 17,
-
-			GrassRidgeLeftTop = 6,
-			GrassRidgeLeft = 11,
-			GrassRidgeLeftBottom = 16,
-
-			GrassRidgeRightTop = 10,
-			GrassRidgeRight = 15,
-			GrassRidgeRightBottom = 20,
-
-			GrassRidgeBottomLeft = 22,
-			GrassRidgeBottom = 23,
-			GrassRidgeBottomRight = 24,
-
-			GrassCornerBottomLeft = 21,
-			GrassCornerBottomRight = 25,
-
-			GrassCornerTopLeft = 1,
-			GrassCornerTopRight = 5,
-
-			TypeCount = 14,
-		};
-
-		static const int TileSize = 16;
-
 		TileMap();
 
 		void loadTexture(const std::string& filename);
@@ -51,6 +24,11 @@ namespace temm
 
 		int mWidth;
 		int mHeight;
+		int mTilesetWidth;
+		int mTilesetHeight;
+		int mTileWidth;
+		int mTileHeight;
+
 		std::vector<sf::VertexArray> mVertices;
 		sf::Texture mTexture;
 	};

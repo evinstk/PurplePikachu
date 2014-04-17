@@ -16,14 +16,7 @@ namespace temm
 		sf::IntRect headRect;
 	};
 
-	struct TileData
-	{
-		TextureID texture;
-		sf::IntRect textureRect;
-	};
-
 	std::vector<MobData> initializeMobData();
-	std::map<int, TileData> initializeTileData();
 
 }
 

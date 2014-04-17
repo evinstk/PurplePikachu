@@ -8,11 +8,6 @@
 namespace temm
 {
 
-	namespace
-	{
-		const std::map<int, TileData> Table = initializeTileData();
-	}
-
 	TileMap::TileMap()
 		: mWidth(0)
 		, mHeight(0)
@@ -35,9 +30,15 @@ namespace temm
 		mapTMX.parse<0>(&buffer[0]);
 
 		rapidxml::xml_node<>* mapNode = mapTMX.first_node();
-
 		mWidth = std::atoi(mapNode->first_attribute("width")->value());
 		mHeight = std::atoi(mapNode->first_attribute("height")->value());
+
+		// Tile properties
+		rapidxml::xml_node<>* tilesetNode = mapNode->first_node("tileset");
+		mTileWidth = std::atoi(tilesetNode->first_attribute("tilewidth")->value());
+		mTileHeight = std::atoi(tilesetNode->first_attribute("tileheight")->value());
+		mTilesetWidth = std::atoi(tilesetNode->first_node("image")->first_attribute("width")->value());
+		mTilesetHeight = std::atoi(tilesetNode->first_node("image")->first_attribute("height")->value());
 
 		mVertices.clear();
 
@@ -51,22 +52,21 @@ namespace temm
 			int i = 0;
 			for (rapidxml::xml_node<>* tile = layer->first_node("data")->first_node("tile"); tile; tile = tile->next_sibling("tile"))
 			{
-				int tileID = std::atoi(tile->first_attribute("gid")->value());
-				sf::IntRect textureRect = Table.at(tileID).textureRect;
+				int tileID = std::atoi(tile->first_attribute("gid")->value()) - 1;
 
 				sf::Vertex* quad = &mVertices[layerIndex][i * 4];
 
-				sf::Vector2f topLeft(float(i % mWidth) * TileSize, (float)(i / mWidth) * TileSize);
+				sf::Vector2f topLeft(float(i % mWidth) * mTileWidth, (float)(i / mWidth) * mTileHeight);
 				quad[0].position = topLeft;
-				quad[1].position = topLeft + sf::Vector2f((float)TileSize, 0.f);
-				quad[2].position = topLeft + sf::Vector2f((float)TileSize, (float)TileSize);
-				quad[3].position = topLeft + sf::Vector2f(0.f, (float)TileSize);
+				quad[1].position = topLeft + sf::Vector2f((float)mTileWidth, 0.f);
+				quad[2].position = topLeft + sf::Vector2f((float)mTileWidth, (float)mTileHeight);
+				quad[3].position = topLeft + sf::Vector2f(0.f, (float)mTileHeight);
 
-				sf::Vector2f texTopLeft((float)textureRect.left, (float)textureRect.top);
+				sf::Vector2f texTopLeft((float)((tileID * mTileWidth) % mTilesetWidth), (float)(((tileID * mTileWidth) / mTilesetWidth) * mTileHeight));
 				quad[0].texCoords = texTopLeft;
-				quad[1].texCoords = texTopLeft + sf::Vector2f((float)TileSize, 0.f);
-				quad[2].texCoords = texTopLeft + sf::Vector2f((float)TileSize, (float)TileSize);
-				quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)TileSize);
+				quad[1].texCoords = texTopLeft + sf::Vector2f((float)mTileWidth, 0.f);
+				quad[2].texCoords = texTopLeft + sf::Vector2f((float)mTileWidth, (float)mTileHeight);
+				quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)mTileHeight);
 
 				++i;
 			}
