@@ -4,6 +4,7 @@
 #include <TEMM/SceneNode.hpp>
 #include <TEMM/ResourceHolder.hpp>
 #include <TEMM/ResourceIdentifiers.hpp>
+#include <TEMM/TileMap.hpp>
 #include <vector>
 
 namespace sf
@@ -18,14 +19,6 @@ namespace temm
 	{
 	public:
 
-		enum class Tile
-		{
-			Grass,
-			Dirt,
-			Water,
-			Count,
-		};
-
 		enum class Layer
 		{
 			Air,
@@ -33,14 +26,12 @@ namespace temm
 			LayerCount,
 		};
 
-		Overworld(sf::RenderTarget& target, Tile defaultTile, int width, int height);
+		Overworld(sf::RenderTarget& target);
+
+		void loadMap(const std::string& filename);
 
 		void draw();
 		bool update(sf::Time dt);
-
-		Tile getTile(int x, int y) const;
-		int getWidth() const;
-		int getHeight() const;
 
 	private:
 		void loadTextures();
@@ -49,10 +40,7 @@ namespace temm
 		sf::RenderTarget& mTarget;
 		TextureHolder mTextures;
 		SceneNode mSceneGraph;
-
-		std::vector<Tile> mTiles;
-		const int mWidth;
-		const int mHeight;
+		TileMap mTileMap;
 	};
 
 }
