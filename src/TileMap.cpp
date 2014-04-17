@@ -16,13 +16,13 @@ namespace temm
 	TileMap::TileMap()
 		: mWidth(0)
 		, mHeight(0)
-		, mTexture(nullptr)
+		, mTexture()
 	{
 	}
 
-	void TileMap::loadTexture(const sf::Texture& texture)
+	void TileMap::loadTexture(const std::string& filename)
 	{
-		mTexture = &texture;
+		mTexture.loadFromFile(filename);
 	}
 
 	void TileMap::loadMap(const std::string& filename)
@@ -74,8 +74,7 @@ namespace temm
 	void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		states.transform *= getTransform();
-		assert(mTexture != nullptr);
-		states.texture = mTexture;
+		states.texture = &mTexture;
 		target.draw(mVertices, states);
 	}
 

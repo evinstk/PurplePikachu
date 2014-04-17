@@ -5,6 +5,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <string>
 
 namespace temm
@@ -42,7 +43,7 @@ namespace temm
 
 		TileMap();
 
-		void loadTexture(const sf::Texture& texture);
+		void loadTexture(const std::string& filename);
 		void loadMap(const std::string& filename);
 
 	private:
@@ -51,7 +52,7 @@ namespace temm
 		int mWidth;
 		int mHeight;
 		sf::VertexArray mVertices;
-		const sf::Texture* mTexture;
+		sf::Texture mTexture;
 	};
 
 }

@@ -22,7 +22,7 @@ namespace temm
 		red->move(10.f, 10.f);
 		mSceneGraph.attachChild(std::move(red));
 
-		mTileMap.loadTexture(mTextures.get(TextureID::Tiles));
+		mTileMap.loadTexture("res/img/tiles.png");
 		mTileMap.loadMap("res/map/test.tmx");
 	}
 
