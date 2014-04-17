@@ -1,10 +1,16 @@
 #ifndef TEMM_TILEMAP_HPP
 #define TEMM_TILEMAP_HPP
 
+#include <SFML/System/NonCopyable.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
+#include <string>
+
 namespace temm
 {
 
-	class TileMap
+	class TileMap : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
 	public:
 		enum Tile
@@ -31,6 +37,21 @@ namespace temm
 
 			TypeCount = 14,
 		};
+
+		static const int TileSize = 16;
+
+		TileMap();
+
+		void loadTexture(const sf::Texture& texture);
+		void loadMap(const std::string& filename);
+
+	private:
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+		int mWidth;
+		int mHeight;
+		sf::VertexArray mVertices;
+		const sf::Texture* mTexture;
 	};
 
 }
