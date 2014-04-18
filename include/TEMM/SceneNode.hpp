@@ -10,8 +10,15 @@
 #include <list>
 #include <functional>
 
+namespace sf
+{
+	class Time;
+}
+
 namespace temm
 {
+	struct Command;
+	class CommandQueue;
 
 	class SceneNode : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
@@ -24,6 +31,10 @@ namespace temm
 		void attachChild(Ptr child);
 		Ptr detachChild(const SceneNode& node);
 
+		void onCommand(const Command& command, sf::Time dt);
+		virtual unsigned int getCategory() const;
+		void update(sf::Time dt, CommandQueue& commands);
+
 		sf::Vector2f getWorldPosition() const;
 		sf::Transform getWorldTransform() const;
 		virtual sf::FloatRect getBoundingRect() const;
@@ -34,6 +45,8 @@ namespace temm
 		friend class SceneNode;
 		typedef std::vector<std::list<std::function<void (void)>>> RenderLists;
 
+		virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
+		void updateChildren(sf::Time dt, CommandQueue& commands);
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states, RenderLists& renderLists) const;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates) const;

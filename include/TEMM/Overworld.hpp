@@ -6,6 +6,7 @@
 #include <TEMM/ResourceIdentifiers.hpp>
 #include <TEMM/TileMap.hpp>
 #include <TEMM/NodeFactory.hpp>
+#include <TEMM/CommandQueue.hpp>
 #include <vector>
 
 namespace sf
@@ -32,7 +33,7 @@ namespace temm
 		void loadTMX(const std::string& filename);
 
 		void draw();
-		bool update(sf::Time dt);
+		void update(sf::Time dt);
 
 	private:
 		void loadTextures();
@@ -45,6 +46,8 @@ namespace temm
 		NodeFactory mNodeFactory;
 		SceneNode mSceneGraph;
 		TileMap mTileMap;
+
+		CommandQueue mCommandQueue;
 	};
 
 }

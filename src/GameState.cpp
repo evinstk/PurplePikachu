@@ -16,6 +16,7 @@ namespace temm
 
     bool GameState::update(sf::Time dt)
     {
+		mOverworld.update(dt);
         return false;
     }
 

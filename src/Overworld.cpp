@@ -25,6 +25,13 @@ namespace temm
 
 		mTileMap.loadTexture("res/img/tiles.png");
 		loadTMX("res/map/test.tmx");
+
+		Command command;
+		command.category = Category::Player;
+		command.action = derivedAction<Mob>([](Mob& mob, sf::Time dt) {
+			mob.setVelocity(5.f, 0.f);
+		});
+		mCommandQueue.push(std::move(command));
 	}
 
 	void Overworld::loadTMX(const std::string& filename)
@@ -104,7 +111,7 @@ namespace temm
 	{
 		std::function<SceneNode::Ptr()> redConstructor = [this]()
 		{
-			return SceneNode::Ptr(new Mob(0, Mob::Red, mTextures));
+			return SceneNode::Ptr(new Mob(0, Mob::Red, mTextures, Category::Player));
 		};
 		mNodeFactory.registerNode("Red", redConstructor);
 	}
@@ -115,9 +122,12 @@ namespace temm
 		mTarget.draw(mSceneGraph);
 	}
 
-	bool Overworld::update(sf::Time dt)
+	void Overworld::update(sf::Time dt)
 	{
-		return false;
+		while (!mCommandQueue.isEmpty())
+			mSceneGraph.onCommand(mCommandQueue.pop(), dt);
+
+		mSceneGraph.update(dt, mCommandQueue);
 	}
 
 }

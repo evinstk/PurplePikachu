@@ -1,6 +1,8 @@
 #include <TEMM/SceneNode.hpp>
+#include <TEMM/Command.hpp>
 #include <TEMM/Utility.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Time.hpp>
 #include <cassert>
 
 namespace temm
@@ -31,6 +33,26 @@ namespace temm
 		return result;
 	}
 
+	void SceneNode::onCommand(const Command& command, sf::Time dt)
+	{
+		if (command.category & getCategory())
+			command.action(*this, dt);
+
+		for (Ptr& child : mChildren)
+			child->onCommand(command, dt);
+	}
+
+	unsigned int SceneNode::getCategory() const
+	{
+		return mDefaultCategory;
+	}
+
+	void SceneNode::update(sf::Time dt, CommandQueue& commands)
+	{
+		updateCurrent(dt, commands);
+		updateChildren(dt, commands);
+	}
+
 	sf::Vector2f SceneNode::getWorldPosition() const
 	{
 		return getWorldTransform() * sf::Vector2f();
@@ -49,6 +71,17 @@ namespace temm
 	sf::FloatRect SceneNode::getBoundingRect() const
 	{
 		return sf::FloatRect();
+	}
+
+	void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commands)
+	{
+		// Nothing by default
+	}
+
+	void SceneNode::updateChildren(sf::Time dt, CommandQueue& commands)
+	{
+		for (Ptr& child : mChildren)
+			child->update(dt, commands);
 	}
 
 	void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const

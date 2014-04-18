@@ -2,6 +2,7 @@
 #include <TEMM/DataTables.hpp>
 #include <TEMM/ResourceHolder.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Time.hpp>
 
 namespace temm
 {
@@ -27,6 +28,22 @@ namespace temm
 	sf::FloatRect Mob::getBoundingRect() const
 	{
 		return getWorldTransform().transformRect(mCollisionSprite.getGlobalBounds());
+	}
+
+	void Mob::setVelocity(sf::Vector2f velocity)
+	{
+		mVelocity = velocity;
+	}
+
+	void Mob::setVelocity(float vx, float vy)
+	{
+		mVelocity.x = vx;
+		mVelocity.y = vy;
+	}
+
+	void Mob::updateCurrent(sf::Time dt, CommandQueue& commands)
+	{
+		move(mVelocity * dt.asSeconds());
 	}
 
 	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
