@@ -73,7 +73,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="20">
+ <layer name="TileMap" width="20" height="20">
   <data>
    <tile gid="17"/>
    <tile gid="17"/>
@@ -477,4 +477,7 @@
    <tile gid="17"/>
   </data>
  </layer>
+ <objectgroup name="Object Layer 1" width="20" height="20">
+  <object type="Red" x="80" y="64" width="16" height="16"/>
+ </objectgroup>
 </map>

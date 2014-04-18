@@ -12,6 +12,8 @@ namespace temm
 
 	Overworld::Overworld(sf::RenderTarget& target)
 		: mTarget(target)
+		, mTextures()
+		, mNodeFactory()
 		, mSceneGraph(0)
 		, mTileMap()
 	{
@@ -19,10 +21,7 @@ namespace temm
 		mTileMap.setScale(4.f, 4.f);
 
 		loadTextures();
-
-		std::unique_ptr<Mob> red(new Mob(0, Mob::Red, mTextures));
-		red->move(10.f, 10.f);
-		mSceneGraph.attachChild(std::move(red));
+		loadNodeFactory();
 
 		mTileMap.loadTexture("res/img/tiles.png");
 		loadTMX("res/map/test.tmx");
@@ -82,11 +81,32 @@ namespace temm
 		}
 
 		mTileMap.setVertices(std::move(vertices));
+
+		for (rapidxml::xml_node<>* objectGroupNode = mapNode->first_node("objectgroup"); objectGroupNode; objectGroupNode = objectGroupNode->next_sibling("objectgroup"))
+		{
+			for (rapidxml::xml_node<>* objectNode = objectGroupNode->first_node("object"); objectNode; objectNode = objectNode->next_sibling("object"))
+			{
+				SceneNode::Ptr sceneNode = mNodeFactory.get(objectNode->first_attribute("type")->value());
+				float x = (float)std::atof(objectNode->first_attribute("x")->value());
+				float y = (float)std::atof(objectNode->first_attribute("y")->value());
+				sceneNode->setPosition(x, y);
+				mSceneGraph.attachChild(std::move(sceneNode));
+			}
+		}
 	}
 
 	void Overworld::loadTextures()
 	{
 		mTextures.load(TextureID::Entities, "res/img/entities.png");
+	}
+
+	void Overworld::loadNodeFactory()
+	{
+		std::function<SceneNode::Ptr()> redConstructor = [this]()
+		{
+			return SceneNode::Ptr(new Mob(0, Mob::Red, mTextures));
+		};
+		mNodeFactory.registerNode("Red", redConstructor);
 	}
 
 	void Overworld::draw()

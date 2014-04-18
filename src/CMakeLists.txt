@@ -14,6 +14,8 @@ set(SRC
     ${SRCROOT}/GameState.cpp
 	${INCROOT}/Mob.hpp
 	${SRCROOT}/Mob.cpp
+	${INCROOT}/NodeFactory.hpp
+	${SRCROOT}/NodeFactory.cpp
 	${INCROOT}/Overworld.hpp
 	${SRCROOT}/Overworld.cpp
 	${INCROOT}/ResourceHolder.hpp

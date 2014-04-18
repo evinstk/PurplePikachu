@@ -5,6 +5,7 @@
 #include <TEMM/ResourceHolder.hpp>
 #include <TEMM/ResourceIdentifiers.hpp>
 #include <TEMM/TileMap.hpp>
+#include <TEMM/NodeFactory.hpp>
 #include <vector>
 
 namespace sf
@@ -35,10 +36,13 @@ namespace temm
 
 	private:
 		void loadTextures();
+		void loadNodeFactory();
+
 		void resolveCollisions();
 
 		sf::RenderTarget& mTarget;
 		TextureHolder mTextures;
+		NodeFactory mNodeFactory;
 		SceneNode mSceneGraph;
 		TileMap mTileMap;
 	};
