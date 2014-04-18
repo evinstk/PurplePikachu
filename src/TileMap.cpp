@@ -1,8 +1,6 @@
 #include <TEMM/TileMap.hpp>
 #include <TEMM/DataTables.hpp>
-#include <RapidXML/rapidxml.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <fstream>
 #include <array>
 
 namespace temm
@@ -20,58 +18,23 @@ namespace temm
 		mTexture.loadFromFile(filename);
 	}
 
-	void TileMap::loadMap(const std::string& filename)
+	void TileMap::setVertices(const std::vector<sf::VertexArray>& vArray)
 	{
-		rapidxml::xml_document<> mapTMX;
-		std::ifstream mapFile(filename);
-		std::vector<char> buffer((std::istreambuf_iterator<char>(mapFile)), std::istreambuf_iterator<char>());
-		mapFile.close();
-		buffer.push_back('\0');
-		mapTMX.parse<0>(&buffer[0]);
-
-		rapidxml::xml_node<>* mapNode = mapTMX.first_node();
-		mWidth = std::atoi(mapNode->first_attribute("width")->value());
-		mHeight = std::atoi(mapNode->first_attribute("height")->value());
-
-		// Tile properties
-		rapidxml::xml_node<>* tilesetNode = mapNode->first_node("tileset");
-		mTileWidth = std::atoi(tilesetNode->first_attribute("tilewidth")->value());
-		mTileHeight = std::atoi(tilesetNode->first_attribute("tileheight")->value());
-		mTilesetWidth = std::atoi(tilesetNode->first_node("image")->first_attribute("width")->value());
-		mTilesetHeight = std::atoi(tilesetNode->first_node("image")->first_attribute("height")->value());
-
 		mVertices.clear();
-
-		int layerIndex = 0;
-		for (rapidxml::xml_node<>* layer = mapNode->first_node("layer"); layer; layer = layer->next_sibling("layer"))
+		mVertices.resize(vArray.size());
+		for (unsigned i = 0; i < vArray.size(); ++i)
 		{
-			mVertices.push_back(sf::VertexArray());
-			mVertices[layerIndex].setPrimitiveType(sf::Quads);
-			mVertices[layerIndex].resize(mWidth * mHeight * 4);
-
-			int i = 0;
-			for (rapidxml::xml_node<>* tile = layer->first_node("data")->first_node("tile"); tile; tile = tile->next_sibling("tile"))
+			for (unsigned j = 0; j < vArray[i].getVertexCount(); ++j)
 			{
-				int tileID = std::atoi(tile->first_attribute("gid")->value()) - 1;
-
-				sf::Vertex* quad = &mVertices[layerIndex][i * 4];
-
-				sf::Vector2f topLeft(float(i % mWidth) * mTileWidth, (float)(i / mWidth) * mTileHeight);
-				quad[0].position = topLeft;
-				quad[1].position = topLeft + sf::Vector2f((float)mTileWidth, 0.f);
-				quad[2].position = topLeft + sf::Vector2f((float)mTileWidth, (float)mTileHeight);
-				quad[3].position = topLeft + sf::Vector2f(0.f, (float)mTileHeight);
-
-				sf::Vector2f texTopLeft((float)((tileID * mTileWidth) % mTilesetWidth), (float)(((tileID * mTileWidth) / mTilesetWidth) * mTileHeight));
-				quad[0].texCoords = texTopLeft;
-				quad[1].texCoords = texTopLeft + sf::Vector2f((float)mTileWidth, 0.f);
-				quad[2].texCoords = texTopLeft + sf::Vector2f((float)mTileWidth, (float)mTileHeight);
-				quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)mTileHeight);
-
-				++i;
+				mVertices[i].append(vArray[i][j]);
 			}
-			++layerIndex;
 		}
+	}
+
+	void TileMap::setVertices(std::vector<sf::VertexArray>&& vArray)
+	{
+		mVertices.clear();
+		mVertices = std::move(vArray);
 	}
 
 	void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const

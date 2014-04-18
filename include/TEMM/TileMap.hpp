@@ -17,7 +17,9 @@ namespace temm
 		TileMap();
 
 		void loadTexture(const std::string& filename);
-		void loadMap(const std::string& filename);
+
+		void setVertices(const std::vector<sf::VertexArray>& vArray);
+		void setVertices(std::vector<sf::VertexArray>&& vArray);
 
 	private:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;

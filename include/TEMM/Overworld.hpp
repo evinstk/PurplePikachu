@@ -28,7 +28,7 @@ namespace temm
 
 		Overworld(sf::RenderTarget& target);
 
-		void loadMap(const std::string& filename);
+		void loadTMX(const std::string& filename);
 
 		void draw();
 		bool update(sf::Time dt);
