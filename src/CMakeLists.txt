@@ -8,6 +8,9 @@ set(SRC
     ${SRCROOT}/Application.cpp
     ${INCROOT}/Category.hpp
 	${INCROOT}/Command.hpp
+	${SRCROOT}/Command.cpp
+	${INCROOT}/CommandQueue.hpp
+	${SRCROOT}/CommandQueue.cpp
 	${INCROOT}/DataTables.hpp
 	${SRCROOT}/DataTables.cpp
     ${INCROOT}/GameState.hpp
