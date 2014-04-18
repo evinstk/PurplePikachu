@@ -18,7 +18,7 @@ namespace temm
 			TypeCount
 		};
 
-		Mob(unsigned z, Type type, const TextureHolder& textures);
+		Mob(unsigned z, Type type, const TextureHolder& textures, Category::Type category = Category::None);
 
 		sf::FloatRect getBoundingRect() const;
 

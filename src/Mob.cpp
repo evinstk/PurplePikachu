@@ -11,8 +11,8 @@ namespace temm
 		const std::vector<MobData> Table = initializeMobData();
 	}
 
-	Mob::Mob(unsigned z, Type type, const TextureHolder& textures)
-		: SceneNode(z)
+	Mob::Mob(unsigned z, Type type, const TextureHolder& textures, Category::Type category)
+		: SceneNode(z, category)
 		, mType(type)
 		, mCollisionSprite(textures.get(Table[type].texture), Table[type].collisionRect)
 		, mVelocity(0.f, 0.f)
