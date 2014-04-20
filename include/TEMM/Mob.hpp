@@ -24,12 +24,16 @@ namespace temm
 
 		void setVelocity(sf::Vector2f velocity);
 		void setVelocity(float vx, float vy);
+		void setIdentifier(int identifier);
+
+		int getIdentifier() const;
 
 	private:
 		virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		Type mType;
+		int mIdentifier;
 		sf::Sprite mCollisionSprite;
 		SpriteNode* mHead;
 		sf::Vector2f mVelocity;

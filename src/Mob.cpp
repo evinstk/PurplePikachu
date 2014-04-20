@@ -41,6 +41,16 @@ namespace temm
 		mVelocity.y = vy;
 	}
 
+	void Mob::setIdentifier(int identifier)
+	{
+		mIdentifier = identifier;
+	}
+
+	int Mob::getIdentifier() const
+	{
+		return mIdentifier;
+	}
+
 	void Mob::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		move(mVelocity * dt.asSeconds());
