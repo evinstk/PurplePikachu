@@ -1,5 +1,5 @@
-#ifndef COMMAND_HPP
-#define COMMAND_HPP
+#ifndef TEMM_COMMAND_HPP
+#define TEMM_COMMAND_HPP
 
 #include <TEMM/Category.hpp>
 #include <SFML/System/Time.hpp>
