@@ -30,6 +30,8 @@ namespace temm
 
 		Overworld(sf::RenderTarget& target);
 
+		CommandQueue& getCommandQueue();
+
 		void loadTMX(const std::string& filename);
 
 		void draw();

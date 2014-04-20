@@ -3,6 +3,7 @@
 
 #include <TEMM/State.hpp>
 #include <TEMM/Overworld.hpp>
+#include <TEMM/Player.hpp>
 
 namespace temm
 {
@@ -17,6 +18,7 @@ namespace temm
 
 	private:
 		Overworld mOverworld;
+		Player mPlayer;
     };
 }
 

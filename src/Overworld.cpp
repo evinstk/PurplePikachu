@@ -25,13 +25,11 @@ namespace temm
 
 		mTileMap.loadTexture("res/img/tiles.png");
 		loadTMX("res/map/test.tmx");
+	}
 
-		Command command;
-		command.category = Category::Player;
-		command.action = derivedAction<Mob>([](Mob& mob, sf::Time dt) {
-			mob.setVelocity(5.f, 0.f);
-		});
-		mCommandQueue.push(std::move(command));
+	CommandQueue& Overworld::getCommandQueue()
+	{
+		return mCommandQueue;
 	}
 
 	void Overworld::loadTMX(const std::string& filename)
@@ -97,6 +95,14 @@ namespace temm
 				float x = (float)std::atof(objectNode->first_attribute("x")->value());
 				float y = (float)std::atof(objectNode->first_attribute("y")->value());
 				sceneNode->setPosition(x, y);
+				if (objectNode->first_attribute("name"))
+				{
+					if (std::strcmp(objectNode->first_attribute("name")->value(), "Player") == 0)
+					{
+						assert(dynamic_cast<Mob*>(&*sceneNode) != nullptr);
+						static_cast<Mob&>(*sceneNode).setIdentifier(1);
+					}
+				}
 				mSceneGraph.attachChild(std::move(sceneNode));
 			}
 		}
