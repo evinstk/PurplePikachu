@@ -54,6 +54,7 @@ namespace temm
 	void Mob::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		move(mVelocity * dt.asSeconds());
+		mVelocity = sf::Vector2f();
 	}
 
 	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
