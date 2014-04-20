@@ -7,7 +7,9 @@ namespace temm
 {
 	Application::Application(float fps)
 		: mWindow(sf::VideoMode(1024, 768), "Purple Pikachu", sf::Style::Close)
-		, mStateStack(State::Context(mWindow, mTextures))
+		, mTextures()
+		, mKeyBinding1(1)
+		, mStateStack(State::Context(mWindow, mTextures, mKeyBinding1))
 		, mTimePerFrame(sf::seconds(1.f / fps))
 	{
 		mWindow.setKeyRepeatEnabled(false);

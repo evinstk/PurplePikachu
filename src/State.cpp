@@ -3,9 +3,10 @@
 
 namespace temm
 {
-	State::Context::Context(sf::RenderWindow& window, TextureHolder& textures)
+	State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, KeyBinding& keys1)
 		: window(&window)
 		, textures(&textures)
+		, keys1(&keys1)
 	{
 	}
 

@@ -9,6 +9,7 @@
 namespace temm
 {
 	class StateStack;
+	class KeyBinding;
 
 	namespace States
 	{
@@ -26,10 +27,11 @@ namespace temm
 		typedef std::unique_ptr<State> Ptr;
 		struct Context
 		{
-			Context(sf::RenderWindow& window, TextureHolder& textures);
+			Context(sf::RenderWindow& window, TextureHolder& textures, KeyBinding& keys1);
 
 			sf::RenderWindow* window;
 			TextureHolder* textures;
+			KeyBinding* keys1;
 		};
 
 		State(StateStack& stack, Context context);

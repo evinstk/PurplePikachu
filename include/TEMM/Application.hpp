@@ -3,6 +3,7 @@
 
 #include <TEMM/StateStack.hpp>
 #include <TEMM/ResourceHolder.hpp>
+#include <TEMM/KeyBinding.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
@@ -21,6 +22,7 @@ namespace temm
 
 		sf::RenderWindow mWindow;
 		TextureHolder mTextures;
+		KeyBinding mKeyBinding1;
 		StateStack mStateStack;
 		const sf::Time mTimePerFrame;
 	};
