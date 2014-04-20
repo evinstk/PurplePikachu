@@ -58,7 +58,7 @@ namespace temm
 	void Player::initializeActions()
 	{
 		mActionBinding[PlayerAction::MoveLeft].action = derivedAction<Mob>(MobMover(-15, 0, mIdentifier));
-		mActionBinding[PlayerAction::MoveRight].action = derivedAction<Mob>(MobMover(0, 15, mIdentifier));
+		mActionBinding[PlayerAction::MoveRight].action = derivedAction<Mob>(MobMover(15, 0, mIdentifier));
 		mActionBinding[PlayerAction::MoveUp].action = derivedAction<Mob>(MobMover(0, -15, mIdentifier));
 		mActionBinding[PlayerAction::MoveDown].action = derivedAction<Mob>(MobMover(0, 15, mIdentifier));
 	}
