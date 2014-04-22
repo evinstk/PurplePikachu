@@ -35,6 +35,12 @@ namespace temm
 		virtual unsigned int getCategory() const;
 		void update(sf::Time dt, CommandQueue& commands);
 
+		void resolveSceneCollisions(SceneNode& sceneGraph);
+		void resolveNodeCollisions(SceneNode& node);
+
+		bool collides(const SceneNode& node) const;
+		float distance(const SceneNode& node) const;
+
 		sf::Vector2f getWorldPosition() const;
 		sf::Transform getWorldTransform() const;
 		virtual sf::FloatRect getBoundingRect() const;
@@ -47,6 +53,10 @@ namespace temm
 
 		virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 		void updateChildren(sf::Time dt, CommandQueue& commands);
+		
+		virtual void resolveCurrent(SceneNode& node);
+		void resolveChildren(SceneNode& node);
+
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states, RenderLists& renderLists) const;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates) const;
@@ -58,8 +68,6 @@ namespace temm
 		std::vector<Ptr> mChildren;
 	};
 
-	bool collision(const SceneNode& lhs, const SceneNode& rhs);
-	float distance(const SceneNode& lhs, const SceneNode& rhs);
 }
 
 #endif

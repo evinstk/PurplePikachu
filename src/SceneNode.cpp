@@ -53,6 +53,22 @@ namespace temm
 		updateChildren(dt, commands);
 	}
 
+	void SceneNode::resolveSceneCollisions(SceneNode& sceneGraph)
+	{
+		resolveNodeCollisions(sceneGraph);
+
+		for (Ptr& child : sceneGraph.mChildren)
+		{
+			resolveSceneCollisions(*child);
+		}
+	}
+
+	void SceneNode::resolveNodeCollisions(SceneNode& node)
+	{
+		resolveCurrent(node);
+		resolveChildren(node);
+	}
+
 	sf::Vector2f SceneNode::getWorldPosition() const
 	{
 		return getWorldTransform() * sf::Vector2f();
@@ -82,6 +98,17 @@ namespace temm
 	{
 		for (Ptr& child : mChildren)
 			child->update(dt, commands);
+	}
+
+	void SceneNode::resolveCurrent(SceneNode& node)
+	{
+		// Nothing by default
+	}
+
+	void SceneNode::resolveChildren(SceneNode& node)
+	{
+		for (Ptr& child : mChildren)
+			child->resolveNodeCollisions(node);
 	}
 
 	void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -127,14 +154,14 @@ namespace temm
 			child->draw(target, states, renderLists);
 	}
 
-	bool collision(const SceneNode& lhs, const SceneNode& rhs)
+	bool SceneNode::collides(const SceneNode& node) const
 	{
-		return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
+		return getBoundingRect().intersects(node.getBoundingRect());
 	}
 
-	float distance(const SceneNode& lhs, const SceneNode& rhs)
+	float SceneNode::distance(const SceneNode& node) const
 	{
-		return length(lhs.getWorldPosition() - rhs.getWorldPosition());
+		return length(getWorldPosition() - node.getWorldPosition());
 	}
 
 }
