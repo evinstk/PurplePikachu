@@ -10,8 +10,8 @@ namespace temm
 
 	struct MobMover
 	{
-		MobMover(float vx, float vy, int identifier)
-		: velocity(vx, vy)
+		MobMover(Mob::Direction direction, int identifier)
+		: direction(direction)
 		, mobID(identifier)
 		{
 		}
@@ -19,10 +19,10 @@ namespace temm
 		void operator() (Mob& mob, sf::Time) const
 		{
 			if (mob.getIdentifier() == mobID)
-				mob.setVelocity(velocity);
+				mob.setDirection(direction);
 		}
 
-		sf::Vector2f velocity;
+		Mob::Direction direction;
 		int mobID;
 	};
 
@@ -57,10 +57,10 @@ namespace temm
 
 	void Player::initializeActions()
 	{
-		mActionBinding[PlayerAction::MoveLeft].action = derivedAction<Mob>(MobMover(-15, 0, mIdentifier));
-		mActionBinding[PlayerAction::MoveRight].action = derivedAction<Mob>(MobMover(15, 0, mIdentifier));
-		mActionBinding[PlayerAction::MoveUp].action = derivedAction<Mob>(MobMover(0, -15, mIdentifier));
-		mActionBinding[PlayerAction::MoveDown].action = derivedAction<Mob>(MobMover(0, 15, mIdentifier));
+		mActionBinding[PlayerAction::MoveLeft].action = derivedAction<Mob>(MobMover(Mob::Direction::Left, mIdentifier));
+		mActionBinding[PlayerAction::MoveRight].action = derivedAction<Mob>(MobMover(Mob::Direction::Right, mIdentifier));
+		mActionBinding[PlayerAction::MoveUp].action = derivedAction<Mob>(MobMover(Mob::Direction::Up, mIdentifier));
+		mActionBinding[PlayerAction::MoveDown].action = derivedAction<Mob>(MobMover(Mob::Direction::Down, mIdentifier));
 	}
 
 }

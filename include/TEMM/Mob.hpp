@@ -5,6 +5,7 @@
 #include <TEMM/ResourceIdentifiers.hpp>
 #include <TEMM/SpriteNode.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/System/Time.hpp>
 
 namespace temm
 {
@@ -17,13 +18,20 @@ namespace temm
 			Red,
 			TypeCount
 		};
+		enum class Direction
+		{
+			None,
+			Left,
+			Right,
+			Up,
+			Down,
+		};
 
 		Mob(unsigned z, Type type, const TextureHolder& textures, Category::Type category = Category::None);
 
 		sf::FloatRect getBoundingRect() const;
 
-		void setVelocity(sf::Vector2f velocity);
-		void setVelocity(float vx, float vy);
+		void setDirection(Direction direction);
 		void setIdentifier(int identifier);
 
 		int getIdentifier() const;
@@ -36,7 +44,19 @@ namespace temm
 		int mIdentifier;
 		sf::Sprite mCollisionSprite;
 		SpriteNode* mHead;
-		sf::Vector2f mVelocity;
+		Direction mDirection;
+
+		// Stepping members
+		bool mStepping;
+		sf::Time mStepDelay;
+		int mStepDistance;
+		sf::Time mStepWait;
+		int mDiffX;
+		int mDiffY;
+		int mDestX;
+		int mDestY;
+		int mOrigX;
+		int mOrigY;
 	};
 
 }

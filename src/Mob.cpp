@@ -2,7 +2,6 @@
 #include <TEMM/DataTables.hpp>
 #include <TEMM/ResourceHolder.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/System/Time.hpp>
 
 namespace temm
 {
@@ -16,7 +15,18 @@ namespace temm
 		: SceneNode(z, category)
 		, mType(type)
 		, mCollisionSprite(textures.get(Table[type].texture), Table[type].collisionRect)
-		, mVelocity(0.f, 0.f)
+		, mHead(nullptr)
+		, mDirection(Direction::None)
+		, mStepping(false)
+		, mStepDelay(sf::seconds(0.5))
+		, mStepDistance(16)
+		, mStepWait(mStepDelay)
+		, mDiffX(0)
+		, mDiffY(0)
+		, mDestX(0)
+		, mDestY(0)
+		, mOrigX(0)
+		, mOrigY(0)
 	{
 		MobData data = Table[type];
 		std::unique_ptr<SpriteNode> head(new SpriteNode(z + 1, *mCollisionSprite.getTexture(), data.headRect));
@@ -30,15 +40,9 @@ namespace temm
 		return getWorldTransform().transformRect(mCollisionSprite.getGlobalBounds());
 	}
 
-	void Mob::setVelocity(sf::Vector2f velocity)
+	void Mob::setDirection(Direction direction)
 	{
-		mVelocity = velocity;
-	}
-
-	void Mob::setVelocity(float vx, float vy)
-	{
-		mVelocity.x = vx;
-		mVelocity.y = vy;
+		mDirection = direction;
 	}
 
 	void Mob::setIdentifier(int identifier)
@@ -53,8 +57,60 @@ namespace temm
 
 	void Mob::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
-		move(mVelocity * dt.asSeconds());
-		mVelocity = sf::Vector2f();
+		mStepWait -= dt;
+
+		if (mStepping)
+		{
+			sf::Vector2f currPos = getPosition();
+			currPos.x += mDiffX * dt.asSeconds() / mStepDelay.asSeconds();
+			currPos.y += mDiffY * dt.asSeconds() / mStepDelay.asSeconds();
+			setPosition(currPos);
+		}
+
+		if (mStepWait > sf::Time::Zero)
+		{
+			mDirection = Direction::None;
+			return;
+		}
+
+		if (mStepping)
+		{
+			setPosition((float)mDestX, (float)mDestY);
+		}
+		mStepping = false;
+
+		mDiffX = 0;
+		mDiffY = 0;
+
+		if (mDirection == Direction::Left)
+		{
+			mDiffX = -mStepDistance;
+		}
+		else if (mDirection == Direction::Right)
+		{
+			mDiffX = mStepDistance;
+		}
+		else if (mDirection == Direction::Up)
+		{
+			mDiffY = -mStepDistance;
+		}
+		else if (mDirection == Direction::Down)
+		{
+			mDiffY = mStepDistance;
+		}
+
+		if (mDiffY || mDiffX)
+		{
+			sf::Vector2f currPos = getPosition();
+			mStepping = true;
+			mOrigX = (int)currPos.x;
+			mOrigY = (int)currPos.y;
+			mDestX = (int)currPos.x + mDiffX;
+			mDestY = (int)currPos.y + mDiffY;
+			mStepWait = mStepDelay;
+		}
+
+		mDirection = Direction::None;
 	}
 
 	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
