@@ -41,8 +41,6 @@ namespace temm
 		void loadTextures();
 		void loadNodeFactory();
 
-		void resolveCollisions();
-
 		sf::RenderTarget& mTarget;
 		TextureHolder mTextures;
 		NodeFactory mNodeFactory;

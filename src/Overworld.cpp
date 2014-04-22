@@ -134,6 +134,7 @@ namespace temm
 			mSceneGraph.onCommand(mCommandQueue.pop(), dt);
 
 		mSceneGraph.update(dt, mCommandQueue);
+		mSceneGraph.resolveSceneCollisions(mSceneGraph);
 	}
 
 }
