@@ -39,6 +39,7 @@ namespace temm
 	private:
 		virtual void updateCurrent(sf::Time dt, CommandQueue& commands);
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+		virtual void resolveCurrent(SceneNode& node);
 
 		Type mType;
 		int mIdentifier;
@@ -48,6 +49,7 @@ namespace temm
 
 		// Stepping members
 		bool mStepping;
+		bool mFirstStep;
 		sf::Time mStepDelay;
 		int mStepDistance;
 		sf::Time mStepWait;

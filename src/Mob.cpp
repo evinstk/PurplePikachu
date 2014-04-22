@@ -18,9 +18,10 @@ namespace temm
 		, mHead(nullptr)
 		, mDirection(Direction::None)
 		, mStepping(false)
+		, mFirstStep(false)
 		, mStepDelay(sf::seconds(0.5))
 		, mStepDistance(16)
-		, mStepWait(mStepDelay)
+		, mStepWait(sf::Time::Zero)
 		, mDiffX(0)
 		, mDiffY(0)
 		, mDestX(0)
@@ -58,10 +59,12 @@ namespace temm
 	void Mob::updateCurrent(sf::Time dt, CommandQueue& commands)
 	{
 		mStepWait -= dt;
+		if (mStepWait < sf::Time::Zero) mStepWait = sf::Time::Zero;
 
 		if (mStepping)
 		{
 			sf::Vector2f currPos = getPosition();
+			mFirstStep = ((int)currPos.x == mOrigX && (int)currPos.y == mOrigY);
 			currPos.x += mDiffX * dt.asSeconds() / mStepDelay.asSeconds();
 			currPos.y += mDiffY * dt.asSeconds() / mStepDelay.asSeconds();
 			setPosition(currPos);
@@ -99,22 +102,33 @@ namespace temm
 			mDiffY = mStepDistance;
 		}
 
+		sf::Vector2f currPos = getPosition();
 		if (mDiffY || mDiffX)
 		{
-			sf::Vector2f currPos = getPosition();
 			mStepping = true;
-			mOrigX = (int)currPos.x;
-			mOrigY = (int)currPos.y;
 			mDestX = (int)currPos.x + mDiffX;
 			mDestY = (int)currPos.y + mDiffY;
 			mStepWait = mStepDelay;
 		}
-
+		mOrigX = (int)currPos.x;
+		mOrigY = (int)currPos.y;
 		mDirection = Direction::None;
 	}
 
 	void Mob::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(mCollisionSprite, states);
+	}
+
+	void Mob::resolveCurrent(SceneNode& node)
+	{
+		unsigned int category = node.getCategory();
+
+		if (category & Category::Character && this != &node && collides(node) && mFirstStep)
+		{
+			mStepping = false;
+			setPosition((float)mOrigX, (float)mOrigY);
+			mStepWait = sf::Time::Zero;
+		}
 	}
 }
