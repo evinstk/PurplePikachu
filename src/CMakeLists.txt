@@ -15,12 +15,16 @@ set(SRC
 	${SRCROOT}/DataTables.cpp
     ${INCROOT}/GameState.hpp
     ${SRCROOT}/GameState.cpp
+	${INCROOT}/KeyBinding.hpp
+	${SRCROOT}/KeyBinding.cpp
 	${INCROOT}/Mob.hpp
 	${SRCROOT}/Mob.cpp
 	${INCROOT}/NodeFactory.hpp
 	${SRCROOT}/NodeFactory.cpp
 	${INCROOT}/Overworld.hpp
 	${SRCROOT}/Overworld.cpp
+	${INCROOT}/Player.hpp
+	${SRCROOT}/Player.cpp
 	${INCROOT}/ResourceHolder.hpp
 	${INCROOT}/ResourceHolder.inl
 	${INCROOT}/ResourceIdentifiers.hpp
