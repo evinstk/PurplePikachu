@@ -8,19 +8,19 @@ namespace temm
 {
 	struct CmpStr
 	{
-		bool operator()(char const* a, char const* b);
+		bool operator()(const std::string& a, const std::string& b);
 	};
 
 	class NodeFactory
 	{
 	public:
-		void registerNode(char* stringID, const std::function<SceneNode::Ptr()>& constructor);
-		void registerNode(char* stringID, std::function<SceneNode::Ptr()>&& constructor);
+		void registerNode(const std::string& stringID, const std::function<SceneNode::Ptr()>& constructor);
+		void registerNode(const std::string& stringID, std::function<SceneNode::Ptr()>&& constructor);
 
-		SceneNode::Ptr get(char* stringID);
+		SceneNode::Ptr get(const std::string& stringID);
 
 	private:
-		std::map<char*, std::function<SceneNode::Ptr()>, CmpStr> mFactories;
+		std::map<std::string, std::function<SceneNode::Ptr()>, CmpStr> mFactories;
 	};
 
 }
