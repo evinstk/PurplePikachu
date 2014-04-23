@@ -9,7 +9,6 @@ namespace temm
 	TileMap::TileMap()
 		: mVertices()
 		, mTexture()
-		, mRenderLayerKey(-1)
 	{
 	}
 
@@ -18,47 +17,29 @@ namespace temm
 		mTexture.loadFromFile(filename);
 	}
 
-	void TileMap::setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const TileLayers& tileLayers)
+	void TileMap::setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const std::vector<int>& tiles)
 	{
 		mVertices.clear();
-		mRenderLayerKey = -1;
-		for (auto& layer : tileLayers)
+		mVertices.resize(tiles.size() * 4);
+		mVertices.setPrimitiveType(sf::Quads);
+		for (unsigned i = 0; i < tiles.size(); ++i)
 		{
-			sf::VertexArray& currVertexArray = mVertices[layer.first];
-			currVertexArray.resize(layer.second.size() * 4);
-			currVertexArray.setPrimitiveType(sf::Quads);
-			for (unsigned i = 0; i < layer.second.size(); ++i)
-			{
-				// TODO: Account for multiple tilesets
-				int tileID = layer.second[i] - 1;
+			// TODO: Account for multiple tilesets
+			int tileID = tiles[i] - 1;
 
-				sf::Vertex* quad = &currVertexArray[i * 4];
+			sf::Vertex* quad = &mVertices[i * 4];
 
-				sf::Vector2f topLeft(float(i % width) * tileWidth, (float)(i / width) * tileHeight);
-				quad[0].position = topLeft;
-				quad[1].position = topLeft + sf::Vector2f((float)tileWidth, 0.f);
-				quad[2].position = topLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
-				quad[3].position = topLeft + sf::Vector2f(0.f, (float)tileHeight);
+			sf::Vector2f topLeft(float(i % width) * tileWidth, (float)(i / width) * tileHeight);
+			quad[0].position = topLeft;
+			quad[1].position = topLeft + sf::Vector2f((float)tileWidth, 0.f);
+			quad[2].position = topLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
+			quad[3].position = topLeft + sf::Vector2f(0.f, (float)tileHeight);
 
-				sf::Vector2f texTopLeft((float)((tileID * tileWidth) % tilesetWidth), (float)(((tileID * tileWidth) / tilesetWidth) * tileHeight));
-				quad[0].texCoords = texTopLeft;
-				quad[1].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, 0.f);
-				quad[2].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
-				quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)tileHeight);
-			}
-		}
-	}
-
-	void TileMap::setRenderLayer(int key)
-	{
-		auto it = mVertices.find(key);
-		if (it != mVertices.end())
-		{
-			mRenderLayerKey = key;
-		}
-		else
-		{
-			mRenderLayerKey = -1;
+			sf::Vector2f texTopLeft((float)((tileID * tileWidth) % tilesetWidth), (float)(((tileID * tileWidth) / tilesetWidth) * tileHeight));
+			quad[0].texCoords = texTopLeft;
+			quad[1].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, 0.f);
+			quad[2].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
+			quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)tileHeight);
 		}
 	}
 
@@ -66,10 +47,7 @@ namespace temm
 	{
 		states.transform *= getTransform();
 		states.texture = &mTexture;
-		if (mRenderLayerKey != -1)
-		{
-			target.draw(mVertices.at(mRenderLayerKey), states);
-		}
+		target.draw(mVertices, states);
 	}
 
 }

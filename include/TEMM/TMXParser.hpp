@@ -31,6 +31,8 @@ namespace temm
 		TileLayers getTileLayers() const;
 		ObjectLayers getObjectLayers() const;
 
+		int getNumLayers() const;
+
 	private:
 		rapidxml::xml_document<> mTMX;
 		std::vector<char> mBuffer;

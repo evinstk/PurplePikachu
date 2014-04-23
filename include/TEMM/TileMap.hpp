@@ -8,6 +8,7 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <string>
+#include <memory>
 
 namespace temm
 {
@@ -15,21 +16,19 @@ namespace temm
 	class TileMap : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 	{
 	public:
+		typedef std::unique_ptr<TileMap> Ptr;
+
 		TileMap();
 
 		void loadTexture(const std::string& filename);
 
-		void setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const TileLayers& tiles);
-		void setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, TileLayers&& tiles);
-
-		void setRenderLayer(int key);
+		void setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const std::vector<int>& tiles);
 
 	private:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-		std::map<int, sf::VertexArray> mVertices;
+		sf::VertexArray mVertices;
 		sf::Texture mTexture;
-		int mRenderLayerKey;
 	};
 
 }

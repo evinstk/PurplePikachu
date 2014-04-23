@@ -15,16 +15,14 @@ namespace temm
 		, mTextures()
 		, mNodeFactory()
 		, mSceneGraph(0)
-		, mTileMap()
-		, mTMXParser()
+		, mLayers(0)
+		, mTileMaps()
+		, mNumLayers(0)
+		, mCommandQueue()
 	{
-		mSceneGraph.setScale(4.f, 4.f);
-		mTileMap.setScale(4.f, 4.f);
-
 		loadTextures();
 		loadNodeFactory();
 
-		mTileMap.loadTexture("res/img/tiles.png");
 		loadTMX("res/map/test.tmx");
 	}
 
@@ -35,21 +33,39 @@ namespace temm
 
 	void Overworld::loadTMX(const std::string& filename)
 	{
+		TMXParser parser;
+		parser.load(filename);
+
+		mLayers.clear();
+		mNumLayers = parser.getNumLayers();
+		mLayers.resize(mNumLayers);
+
 		std::vector<sf::VertexArray> vertices;
 
-		mTMXParser.load(filename);
+		int width(parser.getWidth());
+		int height(parser.getHeight());
+		int tileWidth(parser.getTileWidth());
+		int tileHeight(parser.getTileHeight());
+		int tilesetWidth(parser.getTilesetWidth());
+		TileLayers tileLayers(parser.getTileLayers());
 
-		int width(mTMXParser.getWidth());
-		int height(mTMXParser.getHeight());
-		int tileWidth(mTMXParser.getTileWidth());
-		int tileHeight(mTMXParser.getTileHeight());
-		int tilesetWidth(mTMXParser.getTilesetWidth());
-		TileLayers tileLayers(mTMXParser.getTileLayers());
-		mTileMap.setMapData(width, height, tileWidth, tileHeight, tilesetWidth, tileLayers);
+		mTileMaps.clear();
+		for (auto& tileMap : tileLayers)
+		{
+			TileMap::Ptr currMap(new TileMap());
+			currMap->setMapData(width, height, tileWidth, tileHeight, tilesetWidth, tileMap.second);
+			currMap->setScale(4.f, 4.f);
+			currMap->loadTexture("res/img/tiles.png");
+			mLayers[tileMap.first] = currMap.get();
+			mTileMaps.push_back(std::move(currMap));
+		}
 
-		ObjectLayers objectLayers(mTMXParser.getObjectLayers());
+		ObjectLayers objectLayers(parser.getObjectLayers());
 		for (auto& objectLayer : objectLayers)
 		{
+			SceneNode::Ptr objectGroup(new SceneNode(0));
+			mLayers[objectLayer.first] = objectGroup.get();
+			objectGroup->setScale(4.f, 4.f);
 			for (auto& object : objectLayer.second)
 			{
 				SceneNode::Ptr sceneNode = mNodeFactory.get(object.type);
@@ -59,8 +75,9 @@ namespace temm
 					assert(dynamic_cast<Mob*>(&*sceneNode) != nullptr);
 					static_cast<Mob&>(*sceneNode).setIdentifier(1);
 				}
-				mSceneGraph.attachChild(std::move(sceneNode));
+				objectGroup->attachChild(std::move(sceneNode));
 			}
+			mSceneGraph.attachChild(std::move(objectGroup));
 		}
 	}
 
@@ -80,8 +97,10 @@ namespace temm
 
 	void Overworld::draw()
 	{
-		mTarget.draw(mTileMap);
-		mTarget.draw(mSceneGraph);
+		for (auto& layer : mLayers)
+		{
+			mTarget.draw(*layer);
+		}
 	}
 
 	void Overworld::update(sf::Time dt)

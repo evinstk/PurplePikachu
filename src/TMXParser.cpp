@@ -8,6 +8,7 @@ namespace temm
 
 	TMXParser::TMXParser()
 		: mTMX()
+		, mBuffer()
 	{
 	}
 
@@ -112,6 +113,19 @@ namespace temm
 		}
 
 		return layers;
+	}
+
+	int TMXParser::getNumLayers() const
+	{
+		int count = 0;
+		for (rapidxml::xml_node<>* node = mTMX.first_node()->first_node(); node; node = node->next_sibling())
+		{
+			if (strcmp(node->name(), "layer") == 0 || strcmp(node->name(), "imagelayer") == 0 || strcmp(node->name(), "objectgroup"))
+			{
+				++count;
+			}
+		}
+		return count;
 	}
 
 }

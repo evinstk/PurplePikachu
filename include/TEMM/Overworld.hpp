@@ -46,11 +46,12 @@ namespace temm
 		TextureHolder mTextures;
 		NodeFactory mNodeFactory;
 		SceneNode mSceneGraph;
-		TileMap mTileMap;
+		std::vector<sf::Drawable*> mLayers;
+		std::vector<TileMap::Ptr> mTileMaps;
+		int mNumLayers;
 
 		CommandQueue mCommandQueue;
 
-		TMXParser mTMXParser;
 	};
 
 }
