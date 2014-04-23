@@ -7,9 +7,7 @@ namespace temm
 {
 
 	TileMap::TileMap()
-		: mWidth(0)
-		, mHeight(0)
-		, mTexture()
+		: mTexture()
 	{
 	}
 
@@ -18,23 +16,34 @@ namespace temm
 		mTexture.loadFromFile(filename);
 	}
 
-	void TileMap::setVertices(const std::vector<sf::VertexArray>& vArray)
+	void TileMap::setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const TileLayers& tileLayers)
 	{
 		mVertices.clear();
-		mVertices.resize(vArray.size());
-		for (unsigned i = 0; i < vArray.size(); ++i)
+		for (auto& layer : tileLayers)
 		{
-			for (unsigned j = 0; j < vArray[i].getVertexCount(); ++j)
+			sf::VertexArray& currVertexArray = mVertices[layer.first];
+			currVertexArray.resize(layer.second.size() * 4);
+			currVertexArray.setPrimitiveType(sf::Quads);
+			for (unsigned i = 0; i < layer.second.size(); ++i)
 			{
-				mVertices[i].append(vArray[i][j]);
+				// TODO: Account for multiple tilesets
+				int tileID = layer.second[i] - 1;
+
+				sf::Vertex* quad = &currVertexArray[i * 4];
+
+				sf::Vector2f topLeft(float(i % width) * tileWidth, (float)(i / width) * tileHeight);
+				quad[0].position = topLeft;
+				quad[1].position = topLeft + sf::Vector2f((float)tileWidth, 0.f);
+				quad[2].position = topLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
+				quad[3].position = topLeft + sf::Vector2f(0.f, (float)tileHeight);
+
+				sf::Vector2f texTopLeft((float)((tileID * tileWidth) % tilesetWidth), (float)(((tileID * tileWidth) / tilesetWidth) * tileHeight));
+				quad[0].texCoords = texTopLeft;
+				quad[1].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, 0.f);
+				quad[2].texCoords = texTopLeft + sf::Vector2f((float)tileWidth, (float)tileHeight);
+				quad[3].texCoords = texTopLeft + sf::Vector2f(0.f, (float)tileHeight);
 			}
 		}
-	}
-
-	void TileMap::setVertices(std::vector<sf::VertexArray>&& vArray)
-	{
-		mVertices.clear();
-		mVertices = std::move(vArray);
 	}
 
 	void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -42,7 +51,7 @@ namespace temm
 		states.transform *= getTransform();
 		states.texture = &mTexture;
 		for (auto& vArray : mVertices)
-			target.draw(vArray, states);
+			target.draw(vArray.second, states);
 	}
 
 }

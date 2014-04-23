@@ -41,6 +41,8 @@ set(SRC
 	${SRCROOT}/TileMap.cpp
     ${INCROOT}/TitleState.hpp
     ${SRCROOT}/TitleState.cpp
+	${INCROOT}/TMXParser.hpp
+	${SRCROOT}/TMXParser.cpp
 	${INCROOT}/Typedefs.hpp
 	${INCROOT}/Utility.hpp
 	${SRCROOT}/Utility.cpp

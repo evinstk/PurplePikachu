@@ -7,6 +7,7 @@
 #include <TEMM/TileMap.hpp>
 #include <TEMM/NodeFactory.hpp>
 #include <TEMM/CommandQueue.hpp>
+#include <TEMM/TMXParser.hpp>
 #include <vector>
 
 namespace sf
@@ -48,6 +49,8 @@ namespace temm
 		TileMap mTileMap;
 
 		CommandQueue mCommandQueue;
+
+		TMXParser mTMXParser;
 	};
 
 }
