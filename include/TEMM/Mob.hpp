@@ -49,7 +49,6 @@ namespace temm
 
 		// Stepping members
 		bool mStepping;
-		bool mFirstStep;
 		sf::Time mStepDelay;
 		int mStepDistance;
 		sf::Time mStepWait;

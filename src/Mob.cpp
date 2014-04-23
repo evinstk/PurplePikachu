@@ -18,7 +18,6 @@ namespace temm
 		, mHead(nullptr)
 		, mDirection(Direction::None)
 		, mStepping(false)
-		, mFirstStep(false)
 		, mStepDelay(sf::seconds(0.5))
 		, mStepDistance(16)
 		, mStepWait(sf::Time::Zero)
@@ -64,7 +63,6 @@ namespace temm
 		if (mStepping)
 		{
 			sf::Vector2f currPos = getPosition();
-			mFirstStep = ((int)currPos.x == mOrigX && (int)currPos.y == mOrigY);
 			currPos.x += mDiffX * dt.asSeconds() / mStepDelay.asSeconds();
 			currPos.y += mDiffY * dt.asSeconds() / mStepDelay.asSeconds();
 			setPosition(currPos);
@@ -124,7 +122,7 @@ namespace temm
 	{
 		unsigned int category = node.getCategory();
 
-		if (category & Category::Character && this != &node && collides(node) && mFirstStep)
+		if (category & Category::Character && this != &node && collides(node))
 		{
 			mStepping = false;
 			setPosition((float)mOrigX, (float)mOrigY);
