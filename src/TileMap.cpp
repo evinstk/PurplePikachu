@@ -7,7 +7,9 @@ namespace temm
 {
 
 	TileMap::TileMap()
-		: mTexture()
+		: mVertices()
+		, mTexture()
+		, mRenderLayerKey(-1)
 	{
 	}
 
@@ -19,6 +21,7 @@ namespace temm
 	void TileMap::setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const TileLayers& tileLayers)
 	{
 		mVertices.clear();
+		mRenderLayerKey = -1;
 		for (auto& layer : tileLayers)
 		{
 			sf::VertexArray& currVertexArray = mVertices[layer.first];
@@ -46,12 +49,27 @@ namespace temm
 		}
 	}
 
+	void TileMap::setRenderLayer(int key)
+	{
+		auto it = mVertices.find(key);
+		if (it != mVertices.end())
+		{
+			mRenderLayerKey = key;
+		}
+		else
+		{
+			mRenderLayerKey = -1;
+		}
+	}
+
 	void TileMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		states.transform *= getTransform();
 		states.texture = &mTexture;
-		for (auto& vArray : mVertices)
-			target.draw(vArray.second, states);
+		if (mRenderLayerKey != -1)
+		{
+			target.draw(mVertices.at(mRenderLayerKey), states);
+		}
 	}
 
 }

@@ -22,11 +22,14 @@ namespace temm
 		void setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, const TileLayers& tiles);
 		void setMapData(int width, int height, int tileWidth, int tileHeight, int tilesetWidth, TileLayers&& tiles);
 
+		void setRenderLayer(int key);
+
 	private:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		std::map<int, sf::VertexArray> mVertices;
 		sf::Texture mTexture;
+		int mRenderLayerKey;
 	};
 
 }
