@@ -27,7 +27,7 @@ namespace temm
 		void draw();
 		void handleEvent(const sf::Event& event);
 
-		void pushState(States::ID stateID);
+		void pushState(States::ID stateID, const std::string& filename = "");
 		void popState();
 		void clearStates();
 
@@ -38,9 +38,10 @@ namespace temm
 
 		struct PendingChange
 		{
-			explicit PendingChange(Action action, States::ID stateID = States::None);
+			explicit PendingChange(Action action, States::ID stateID = States::None, const std::string& filename = "");
 			Action action;
 			States::ID stateID;
+			std::string filename;
 		};
 
 		std::vector<State::Ptr> mStack;

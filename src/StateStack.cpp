@@ -24,6 +24,7 @@ namespace temm
 			{
 			case Push:
 				mStack.push_back(createState(change.stateID));
+				mStack[mStack.size() - 1]->load(change.filename);
 				break;
 			case Pop:
 				mStack.pop_back();
@@ -64,9 +65,9 @@ namespace temm
 		}
 	}
 
-	void StateStack::pushState(States::ID stateID)
+	void StateStack::pushState(States::ID stateID, const std::string& filename)
 	{
-		mPendingList.push_back(PendingChange(Push, stateID));
+		mPendingList.push_back(PendingChange(Push, stateID, filename));
 	}
 
 	void StateStack::popState()
@@ -84,9 +85,10 @@ namespace temm
 		return mStack.empty();
 	}
 
-	StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
+	StateStack::PendingChange::PendingChange(Action action, States::ID stateID, const std::string& filename)
 		: action(action)
 		, stateID(stateID)
+		, filename(filename)
 	{
 	}
 }
