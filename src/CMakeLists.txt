@@ -17,6 +17,8 @@ set(SRC
     ${SRCROOT}/GameState.cpp
 	${INCROOT}/KeyBinding.hpp
 	${SRCROOT}/KeyBinding.cpp
+	${INCROOT}/LuaGameState.hpp
+	${SRCROOT}/LuaGameState.cpp
 	${INCROOT}/Mob.hpp
 	${SRCROOT}/Mob.cpp
 	${INCROOT}/NodeFactory.hpp
