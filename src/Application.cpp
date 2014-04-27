@@ -1,6 +1,7 @@
 #include <TEMM/Application.hpp>
 #include <TEMM/TitleState.hpp>
 #include <TEMM/GameState.hpp>
+#include <TEMM/LuaGameState.hpp>
 #include <SFML/Window/Event.hpp>
 
 namespace temm
@@ -15,7 +16,7 @@ namespace temm
 		mWindow.setKeyRepeatEnabled(false);
 
 		registerStates();
-		mStateStack.pushState(States::Title);
+		mStateStack.pushState(States::Lua, "res/lua/test.lua");
 	}
 
 	void Application::run()
@@ -44,6 +45,7 @@ namespace temm
 	{
 		mStateStack.registerState<TitleState>(States::Title);
 		mStateStack.registerState<GameState>(States::Game);
+		mStateStack.registerState<LuaGameState>(States::Lua);
 	}
 
 	void Application::processInput()
