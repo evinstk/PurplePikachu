@@ -17,6 +17,7 @@ namespace temm
 		{
 			Title,
 			Game,
+			Lua,
 			None,
 		};
 	}
@@ -37,6 +38,7 @@ namespace temm
 		State(StateStack& stack, Context context);
 		virtual ~State();
 
+		virtual void load(const std::string& filename);
 		virtual void draw() = 0;
 		virtual bool update(sf::Time dt) = 0;
 		virtual bool handleEvent(const sf::Event& event) = 0;

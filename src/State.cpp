@@ -20,6 +20,10 @@ namespace temm
 	{
 	}
 
+	void State::load(const std::string& filename)
+	{
+	}
+
 	void State::requestStackPush(States::ID stateID)
 	{
 		mStack->pushState(stateID);
