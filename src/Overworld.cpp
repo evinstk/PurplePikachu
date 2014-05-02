@@ -22,8 +22,6 @@ namespace temm
 	{
 		loadTextures();
 		loadNodeFactory();
-
-		loadTMX("res/map/test.tmx");
 	}
 
 	CommandQueue& Overworld::getCommandQueue()

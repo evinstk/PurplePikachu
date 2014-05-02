@@ -15,7 +15,7 @@ namespace temm
 		mWindow.setKeyRepeatEnabled(false);
 
 		registerStates();
-		mStateStack.pushState(States::Game, "", true);
+		mStateStack.pushState(States::Game, "res/lua/startup.lua", true);
 	}
 
 	void Application::run()
