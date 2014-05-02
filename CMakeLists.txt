@@ -26,6 +26,10 @@ else()
     include_directories(${SFML_INCLUDE_DIR})
 endif()
 
+# find Lua libraries
+find_package(Lua51 REQUIRED)
+include_directories(${LUA_INCLUDE_DIR})
+
 # include TEMM include and Boost include
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 

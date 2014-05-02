@@ -17,8 +17,8 @@ set(SRC
     ${SRCROOT}/GameState.cpp
 	${INCROOT}/KeyBinding.hpp
 	${SRCROOT}/KeyBinding.cpp
-	${INCROOT}/LuaGameState.hpp
-	${SRCROOT}/LuaGameState.cpp
+	${INCROOT}/LuaState.hpp
+	${INCROOT}/LuaState.inl
 	${INCROOT}/Mob.hpp
 	${SRCROOT}/Mob.cpp
 	${INCROOT}/NodeFactory.hpp
@@ -53,3 +53,4 @@ set(SRC
 
 add_executable(purple_pikachu ${SRC})
 target_link_libraries(purple_pikachu ${SFML_LIBRARIES})
+target_link_libraries(purple_pikachu ${LUA_LIBRARIES})
