@@ -8,12 +8,12 @@ namespace temm
 	{
 	}
 
-	State::Ptr StateStack::createState(States::ID stateID)
+	State::Ptr StateStack::createState(States::ID stateID, bool luaWrapped)
 	{
 		auto found = mFactories.find(stateID);
 		assert(found != mFactories.end());
 
-		return found->second();
+		return found->second(luaWrapped);
 	}
 
 	void StateStack::applyPendingChanges()
@@ -23,7 +23,7 @@ namespace temm
 			switch (change.action)
 			{
 			case Push:
-				mStack.push_back(createState(change.stateID));
+				mStack.push_back(createState(change.stateID, change.luaWrapped));
 				mStack[mStack.size() - 1]->load(change.filename);
 				break;
 			case Pop:
@@ -65,9 +65,9 @@ namespace temm
 		}
 	}
 
-	void StateStack::pushState(States::ID stateID, const std::string& filename)
+	void StateStack::pushState(States::ID stateID, const std::string& filename, bool luaWrapped)
 	{
-		mPendingList.push_back(PendingChange(Push, stateID, filename));
+		mPendingList.push_back(PendingChange(Push, stateID, filename, luaWrapped));
 	}
 
 	void StateStack::popState()
@@ -85,10 +85,11 @@ namespace temm
 		return mStack.empty();
 	}
 
-	StateStack::PendingChange::PendingChange(Action action, States::ID stateID, const std::string& filename)
+	StateStack::PendingChange::PendingChange(Action action, States::ID stateID, const std::string& filename, bool luaWrapped)
 		: action(action)
 		, stateID(stateID)
 		, filename(filename)
+		, luaWrapped(luaWrapped)
 	{
 	}
 }

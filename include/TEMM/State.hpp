@@ -17,7 +17,6 @@ namespace temm
 		{
 			Title,
 			Game,
-			Lua,
 			None,
 		};
 	}
