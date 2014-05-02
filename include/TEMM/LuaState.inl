@@ -1,3 +1,4 @@
+#include <TEMM/GameState.hpp>
 #include <lua.hpp>
 #include <cassert>
 
@@ -53,5 +54,11 @@ namespace temm
 	void LuaState<DerivedState>::exposeInterface()
 	{
 	}
+
+	// Specialized declarations
+	template <>
+	struct LuaState<GameState>::InterfaceSuite;
+	template <>
+	void LuaState<GameState>::exposeInterface();
 
 }

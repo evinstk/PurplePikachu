@@ -19,7 +19,10 @@ namespace temm
 		void draw();
 		bool update(sf::Time dt);
 		bool handleEvent(const sf::Event& event);
+
 	private:
+		struct InterfaceSuite;
+
 		void exposeInterface();
 
 		unsigned mRegistryIndex;

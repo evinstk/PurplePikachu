@@ -17,6 +17,8 @@ namespace temm
         virtual bool handleEvent(const sf::Event& event);
 
 	private:
+		template<typename DerivedState> friend class LuaState;
+
 		Overworld mOverworld;
 		Player mPlayer;
     };
