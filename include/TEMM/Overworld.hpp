@@ -33,13 +33,13 @@ namespace temm
 
 		CommandQueue& getCommandQueue();
 
+		void loadTextures(const std::string& textureID, const std::string& filename);
 		void loadTMX(const std::string& filename);
 
 		void draw();
 		void update(sf::Time dt);
 
 	private:
-		void loadTextures();
 		void loadNodeFactory();
 
 		sf::RenderTarget& mTarget;

@@ -20,7 +20,6 @@ namespace temm
 		, mNumLayers(0)
 		, mCommandQueue()
 	{
-		loadTextures();
 		loadNodeFactory();
 	}
 
@@ -79,9 +78,9 @@ namespace temm
 		}
 	}
 
-	void Overworld::loadTextures()
+	void Overworld::loadTextures(const std::string& textureID, const std::string& filename)
 	{
-		mTextures.load(TextureID::Entities, "res/img/entities.png");
+		mTextures.load(textureID, filename);
 	}
 
 	void Overworld::loadNodeFactory()

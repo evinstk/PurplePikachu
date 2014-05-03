@@ -1,6 +1,8 @@
 #ifndef TEMM_RESOURCE_IDENTIFIERS_HPP
 #define TEMM_RESOURCE_IDENTIFIERS_HPP
 
+#include <string>
+
 namespace sf
 {
 	class Texture;
@@ -9,15 +11,10 @@ namespace sf
 namespace temm
 {
 
-	enum class TextureID
-	{
-		Entities,
-	};
-
 	template <typename Resource, typename Identifier>
 	class ResourceHolder;
 
-	typedef ResourceHolder<sf::Texture, TextureID> TextureHolder;
+	typedef ResourceHolder<sf::Texture, std::string> TextureHolder;
 }
 
 #endif
